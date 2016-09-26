@@ -1,0 +1,36 @@
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import * as actions from '../actions/index';
+
+class ChefProfile extends Component {
+
+	renderMeals(meal){
+		return (
+			<div>
+				<h3>{meal.name}</h3>
+				<img src={meal.cover_img} />
+			</div>
+		);
+	}
+
+	render(){
+		return (
+			<div className='card card-block'>
+				<h4 className='card-title'>{this.props.chef.name}</h4>
+				<img className='chefCardImg' src={this.props.chef.cover_img} />
+				<h5>{this.props.chef.phone}</h5>
+				<h6>{this.props.chef.email}</h6>
+				{this.props.meals.map(this.renderMeals)}
+			</div>
+		);
+	}
+}
+
+function mapStateToProps(state){
+	return {
+		chef: state.content.current_chef,
+		meals: state.content.meals
+	}
+}
+
+export default connect(mapStateToProps, actions)(ChefProfile);
