@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as actions from '../actions/index';
 import NewMeal from './auth/new_meal';
 
-class SignupChef extends Component {
+class ChefDashboard extends Component {
 	
 	renderMeals(meal){
 		return (
@@ -24,9 +23,7 @@ class SignupChef extends Component {
 				 <img src={this.props.currentChefUser.profile_img} />
 				<NewMeal chef={this.props.currentChefUser} />
 				{
-					this.props.currentChefMeals ?
-					console.log(this.props.currentChefMeals) :
-					null
+					this.props.currentChefMeals.map(this.renderMeals)
 				}
 			</div>
 		);
@@ -40,4 +37,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default connect(mapStateToProps, actions)(SignupChef);
+export default connect(mapStateToProps)(ChefDashboard);

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
-import * as actions from '../../actions/index';
+import { submitNewMeal } from '../../actions/auth_chef_actions';
 
 class NewMeal extends Component {
 
@@ -40,11 +40,11 @@ class NewMeal extends Component {
 				    <label htmlFor="formGroupExampleInput2">Tags</label>
 				    <input ref='tags' type="text" className="form-control" placeholder="veggie, spicy" />
 				  </div>
-				  <button className='btn btn-primary' onClick={this.submitMeal.bind(this)}>Submit Application</button>
+				  <button className='btn btn-primary' onClick={this.submitMeal.bind(this)}>Announce Meal</button>
 			</div>
 		);
 	}
 }
 
 
-export default connect(null, actions)(NewMeal);
+export default connect(null, {submitNewMeal})(NewMeal);

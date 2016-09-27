@@ -1,5 +1,6 @@
 const ChefRoutes = require('./routes/chef_routes');
 const MealRoutes = require('./routes/meal_routes');
+const UserRoutes = require('./routes/user_routes');
 
 module.exports = function(app){
 
@@ -12,4 +13,7 @@ module.exports = function(app){
 
 	app.get('/meals', MealRoutes.getMeals);
 	app.post('/meal', MealRoutes.addMeal);
+
+	app.get('/users', UserRoutes.getUsers);
+	app.post('/user', UserRoutes.addUser);
 }

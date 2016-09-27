@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import * as actions from '../actions/index';
 
 class ChefProfile extends Component {
 
@@ -33,4 +32,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default connect(mapStateToProps, actions)(ChefProfile);
+export default connect(mapStateToProps)(ChefProfile);

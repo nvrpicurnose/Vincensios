@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
-import * as actions from '../actions/index';
+import { fetchUsers, fetchMeals } from '../actions/content_actions';
+import { goToChef } from '../actions/ui_actions';
 
 class UserList extends Component {
 
@@ -44,4 +45,4 @@ function mapStateToProps(state){
 	fetchUsers: dispatch(fetchUsers)
 }*/
 
-export default connect(mapStateToProps, actions)(UserList);
+export default connect(mapStateToProps, {fetchUsers, fetchMeals, goToChef})(UserList);

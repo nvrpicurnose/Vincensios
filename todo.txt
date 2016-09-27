@@ -1,0 +1,3 @@
+============== CLIENT ==============
+- user auth 
+- chef_dashboard should also display that chef's meals by installing redux-thunk and sending a derivative "COOKED_MEALS" action after "NEW_CHEF" action

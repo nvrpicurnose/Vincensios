@@ -1,4 +1,4 @@
-import { NEW_CHEF, NEW_CUSTOMER, MY_CHEF_MEALS, NEW_MEAL } from '../actions/action_types';
+import { NEW_CHEF, NEW_CUSTOMER, COOKED_MEALS, NEW_MEAL } from '../actions/action_types';
 import axios from 'axios';
 import store from '../store';
 
@@ -15,7 +15,7 @@ export default function(state=initial_state, action){
 				...state, 
 				currentChefUser: action.payload.data.success
 			};
-		case MY_CHEF_MEALS:
+		case COOKED_MEALS:
 			return {
 				...state,
 				currentChefMeals: action.payload.data
@@ -23,8 +23,7 @@ export default function(state=initial_state, action){
 		case NEW_MEAL:
 			return state
 		case NEW_CUSTOMER:
-			return state;
-			//return {...state, new_user: action.payload}
+			return {...state, currentCustomerUser: action.payload.data.success}
 	} 
 	return state;
 }

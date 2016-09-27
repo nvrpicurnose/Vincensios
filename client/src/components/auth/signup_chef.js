@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
-import * as actions from '../../actions/index';
+import {signupChef} from '../../actions/auth_chef_actions';
 
 class SignupChef extends Component {
 
@@ -20,6 +20,7 @@ class SignupChef extends Component {
 	render(){
 		return (
 			<div className='card card-block'>
+				  <h1>SIGN UP NEW CHEF</h1>
 				  <div className="form-group">
 				    <label htmlFor="formGroupExampleInput">Name</label>
 				    <input ref='chef_name' type="text" className="form-control" placeholder="Joey Lam" />
@@ -52,4 +53,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default connect(null, actions)(SignupChef);
+export default connect(null, {signupChef})(SignupChef);
