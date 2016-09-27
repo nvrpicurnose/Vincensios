@@ -9,7 +9,6 @@ export default function({dispatch}){
 			// Make sure the action's promise resolves
 			action.payload
 				.then(function(response){
-					console.log(response);
 					const newAction = {
 						...action,
 						payload: response

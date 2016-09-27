@@ -18,5 +18,6 @@
 #app{
 	max-height: 100vh;
 	max-width: 100vw;
-	overflow: scroll;
+	overflow-y: scroll;
+	overflow-x: scroll;
 }

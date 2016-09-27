@@ -6,7 +6,7 @@ class ChefProfile extends Component {
 
 	renderMeals(meal){
 		return (
-			<div>
+			<div key={meal._id}>
 				<h3>{meal.name}</h3>
 				<img src={meal.cover_img} />
 			</div>

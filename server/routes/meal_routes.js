@@ -2,14 +2,9 @@ const Meal = require('../models/meal_model');
 
 // GET/meals
 exports.getMeals = function(req, res, next){
-	console.log("============================");
-	console.log(req.url);
-	console.log(req.query);
 	// req.query lets you retreive params from url (eg. http://myapp.com/meals?chef_id=123)
 	if(req.query.chef_id){
 		Meal.find({chef_id: req.query.chef_id}, function(err, meals){
-			console.log("============================");
-			console.log(meals);
 			if(err){return next(err)};
 			if(meals){
 				res.send(meals);
