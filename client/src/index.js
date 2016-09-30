@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from './components/app';
-import ChefsList from './components/user_list';
+import ChefsList from './components/chefs_list';
 import ChefProfile from './components/chef_profile';
 
 import SignupChef from './components/auth/signup_chef';

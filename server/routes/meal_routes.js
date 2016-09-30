@@ -45,3 +45,24 @@ exports.addMeal = function(req, res, next){
 		res.send("Please include at least a meal name, chef_id and main_img.");
 	}
 }
+
+// POST/del_meal
+exports.delMeal = function(req, res, next){
+	const meal = req.body;
+	if(meal){
+		Meal.findOne({_id: meal._id}, function(err, existingMeal){
+			if(err){return next(err);}
+			// if a meal with this email does exist, we will return an error on request
+			if(existingMeal){
+				existingMeal.remove(function(err){
+					res.json({
+						message:"Successfully removed "+existingMeal.name,
+						deleted: existingMeal
+					});
+				});
+			}
+		});
+	}else{
+		res.json("Please specify a meal to delete.")
+	}
+}

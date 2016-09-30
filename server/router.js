@@ -10,9 +10,11 @@ module.exports = function(app){
 
 	app.get('/chefs', ChefRoutes.getChefs);
 	app.post('/chef', ChefRoutes.addChef);
+	app.post('/del_chef', ChefRoutes.delChef);
 
 	app.get('/meals', MealRoutes.getMeals);
 	app.post('/meal', MealRoutes.addMeal);
+	app.post('/del_meal', MealRoutes.delMeal);
 
 	app.get('/users', UserRoutes.getUsers);
 	app.post('/user', UserRoutes.addUser);

@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router';
 import { fetchUsers, fetchMeals } from '../actions/content_actions';
 import { goToChef } from '../actions/ui_actions';
 
-class UserList extends Component {
+class ChefsList extends Component {
 
 	componentWillMount(){
 		this.props.fetchUsers();		
@@ -17,7 +17,7 @@ class UserList extends Component {
 	}
 
 
-	renderUser(chef){
+	renderChef(chef){
 		return (
 			<div className='card card-block' onClick={()=>this.goToChef(chef)} key={chef._id} >
 				<h4 className='card-title'>{chef.name}</h4>
@@ -29,7 +29,7 @@ class UserList extends Component {
 	render(){
 		return (
 			<div className='user-list'>
-				{this.props.chefs.map(this.renderUser.bind(this))}
+				{this.props.chefs.map(this.renderChef.bind(this))}
 			</div>
 		);
 	}
@@ -45,4 +45,4 @@ function mapStateToProps(state){
 	fetchUsers: dispatch(fetchUsers)
 }*/
 
-export default connect(mapStateToProps, {fetchUsers, fetchMeals, goToChef})(UserList);
+export default connect(mapStateToProps, {fetchUsers, fetchMeals, goToChef})(ChefsList);

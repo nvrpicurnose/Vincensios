@@ -9,6 +9,8 @@ export const GO_TO_CHEF = 'GO_TO_CHEF';
 export const NEW_CHEF = "NEW_CHEF";
 export const NEW_MEAL = "NEW_MEAL";
 export const COOKED_MEALS = "COOKED_MEALS";
+export const DEL_CHEF = 'DEL_CHEF';
+export const DEL_MEAL = 'DEL_MEAL';
 
 // user auth related actions
 export const NEW_CUSTOMER = "NEW_CUSTOMER";

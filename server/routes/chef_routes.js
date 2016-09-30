@@ -49,3 +49,24 @@ exports.addChef = function(req, res, next){
 		res.send("Please include at least an name, email and phone.");
 	}
 }
+
+// POST/del_chef
+exports.delChef = function(req, res, next){
+	const chef = req.body;
+	if(chef){
+		Chef.findOne({_id: chef._id}, function(err, existingChef){
+			if(err){return next(err);}
+			// if a chef with this email does exist, we will return an error on request
+			if(existingChef){
+				existingChef.remove(function(err){
+					res.json({
+						message:"Successfully removed "+existingChef.name,
+						deleted: existingChef
+					});
+				});
+			}
+		});
+	}else{
+		res.json("Please specify a chef to delete.")
+	}
+}
