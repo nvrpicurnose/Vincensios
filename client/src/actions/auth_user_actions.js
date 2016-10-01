@@ -1,4 +1,4 @@
-import { NEW_DINER, SUBSCRIBE, GET_PAST_SUBS, GET_FUTURE_SUBS } from './action_types';
+import { NEW_DINER, SUBSCRIBE, GET_PAST_SUBS, GET_FUTURE_SUBS, LOAD_SUB_MEALS } from './action_types';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
 
@@ -46,5 +46,53 @@ export function loadFutureSubscriptions(currentUser, futureSince){
 	return {
 		type: GET_FUTURE_SUBS,
 		payload: futureSubsPromise
+	}
+}
+
+export function loadAsyncPastSubscriptions(currentUser, pastSince){
+	return function(dispatch){
+		const pastSinceUnix = Date.parse(pastSince);
+		axios.get(API_URL+"/past_subs?diner_id="+currentUser._id+"&pastSince="+pastSinceUnix)
+			.then(response => {
+				// if request is good, update state to indicate user is authenticated
+				if(response.data){
+					dispatch({
+						type: GET_PAST_SUBS,
+						payload: response.data
+					});
+					loadMealsFromSubs(response.data);
+				}
+			})
+			.catch((err)=>{
+				// if request is bad, show an error to user
+				console.log(err);
+			});
+	}
+}
+
+function loadMealsFromSubs(subs){
+	console.log("===================");
+	console.log(subs);
+	// how to async chain
+	return function(dispatch){
+		subs.forEach((sub)=>{
+			console.log(sub);
+			const startDate = Date.parse(sub.startDate);
+			const endDate = Date.parse(sub.endDate);
+			axios.get(API_URL+"/subscriptionMeals?chef_id="+sub.chef_id+"&startDate="+startDate+"&endDate="+endDate)
+				.then(response => {
+					// if request is good, update state to indicate user is authenticated
+					if(response.data){
+						dispatch({
+							type: LOAD_SUB_MEALS,
+							payload: response.data
+						});
+					}
+				})
+				.catch((err)=>{
+					// if request is bad, show an error to user
+					console.log(err);
+				});
+		})
 	}
 }

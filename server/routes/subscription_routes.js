@@ -1,4 +1,5 @@
 const Subscription = require('../models/subscription_model');
+const Meal = require('../models/meal_model');
 
 // GET/past_subs
 exports.getPastSubs = function(req, res, next){
@@ -76,5 +77,21 @@ exports.addSub = function(req, res, next){
 		});
 	}else{
 		res.send("Please submit a valid subscription.");
+	}
+}
+
+// GET/subscriptionMeals?
+exports.getMealsFromSub = function(req, res, next){
+	if(req.query.chef_id && req.query.startDate && req.query.endDate){
+		const startDate = new Date(req.query.startDate*1000);
+		const endDate = new Date(req.query.endDate*1000);
+		Meal.find({"$and":[{chef_id: req.query.chef_id}, {deliveryDate: {$gte:startDate}}, {deliveryDate: {$lte: endDate}}]}, function(err, subs){
+			if(err){return next(err)};
+			if(subs){
+				res.send(subs);
+			}else{
+				res.send("No subs found");
+			}
+		});
 	}
 }

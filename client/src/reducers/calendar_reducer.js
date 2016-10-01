@@ -8,9 +8,9 @@ const initial_state = {
 export default function(state=initial_state, action){
 	switch(action.type){
 		case GET_PAST_SUBS:
-			return {...state, dinerSubs: action.payload.data}
+			return {...state, dinerSubs: action.payload}
 		case GET_FUTURE_SUBS:
-			return {...state, dinerSubs: action.payload.data}
+			return {...state, dinerSubs: action.payload}
 	} 
 	return state;
 }

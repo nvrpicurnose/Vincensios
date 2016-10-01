@@ -18,6 +18,7 @@ export const NEW_DINER = "NEW_DINER";
 export const SUBSCRIBE = "SUBSCRIBE";
 export const GET_PAST_SUBS = "GET_PAST_SUBS";
 export const GET_FUTURE_SUBS = "GET_FUTURE_SUBS";
+export const LOAD_SUB_MEALS = "LOAD_SUB_MEALS";
 
 // general auth stuff
 export const AUTH = "AUTH";

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
-import { loadPastSubscriptions, loadFutureSubscriptions } from '../../actions/auth_user_actions';
+import { loadAsyncPastSubscriptions, loadFutureSubscriptions } from '../../actions/auth_user_actions';
 
 class DinerCalendar extends Component {
 
 	componentWillMount(){
-		this.props.loadFutureSubscriptions(this.props.currentUser, new Date());
+		this.props.loadAsyncPastSubscriptions(this.props.currentUser, new Date());
 	}
 	
 	render(){
@@ -25,4 +25,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default connect(mapStateToProps, {loadPastSubscriptions, loadFutureSubscriptions})(DinerCalendar);
+export default connect(mapStateToProps, {loadAsyncPastSubscriptions, loadFutureSubscriptions })(DinerCalendar);
