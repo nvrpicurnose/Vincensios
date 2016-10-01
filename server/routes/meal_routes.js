@@ -31,7 +31,8 @@ exports.addMeal = function(req, res, next){
 				cover_img: newMeal.cover_img,
 				desc: newMeal.desc,
 				ingredients: newMeal.ingredients,
-				tags: newMeal.tags
+				tags: newMeal.tags,
+				deliveryDate: newMeal.deliveryDate
 			});
 			// save() actually saves the new Meal to the db
 			// pass in a callback indicating the Meal was created

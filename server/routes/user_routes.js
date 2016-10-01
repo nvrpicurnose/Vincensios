@@ -1,8 +1,8 @@
 const User = require('../models/user_model');
 
-// GET/users
-exports.getUsers = function(req, res, next){
-	User.find({}, function(err, users){
+// GET/diners
+exports.getDiners = function(req, res, next){
+	User.find({diner: true}, function(err, users){
 		if(err){return next(err)};
 		if(users){
 			res.send(users);
@@ -12,15 +12,15 @@ exports.getUsers = function(req, res, next){
 	})
 }
 
-// POST/user
-exports.addUser = function(req, res, next){
-	const newUser = req.body;
-	if(newUser.email && newUser.phone && newUser.name){
+// POST/diner
+exports.addDiner = function(req, res, next){
+	const newDiner = req.body;
+	if(newDiner.email && newDiner.phone && newDiner.name){
 		// See if a user with a given email exists
-		User.findOne({email: newUser.email}, function(err, existingUser){
+		User.findOne({email: newDiner.email}, function(err, existingDiner){
 			if(err){return next(err);}
 			// if a user with this email does exist, we will return an error on request
-			if(existingUser){
+			if(existingDiner){
 				// status() sets the error code (eg. 404 Not Found)
 				// Errorcode 402 Unprocessable Entity
 				return res.status(402).send({error: "Email is in use"});
@@ -28,11 +28,12 @@ exports.addUser = function(req, res, next){
 			// If a user does not exist, create and save new user
 			// const user is only a variable, it has not yet saved to the db
 			const user = new User({
-				email: newUser.email,
-				phone: newUser.phone,
-				name: newUser.name,
-				profile_img: newUser.profile_img,
-				dualPlayer: false
+				email: newDiner.email,
+				phone: newDiner.phone,
+				name: newDiner.name,
+				profile_img: newDiner.profile_img,
+				chef: false,
+				diner: true
 			});
 			// save() actually saves the new user to the db
 			// pass in a callback indicating the user was created

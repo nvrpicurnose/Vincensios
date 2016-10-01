@@ -5,7 +5,7 @@ const API_URL = "http://localhost:3090";
 
 
 export function signupUser(newUser){
-	const newUserPromise = axios.post(API_URL+"/user", newUser);
+	const newUserPromise = axios.post(API_URL+"/diner", newUser);
 	return {
 		type: NEW_DINER,
 		payload: newUserPromise

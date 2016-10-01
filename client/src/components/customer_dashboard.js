@@ -7,10 +7,10 @@ class CustomerDashboard extends Component {
 		return (
 			<div className='card card-block'>
 				 CUSTOMER DASHBOARD
-				 <h3>{this.props.currentCustomerUser.name}</h3>
-				 <h5>{this.props.currentCustomerUser.email}</h5>
-				 <h5>{this.props.currentCustomerUser.phone}</h5>
-				 <img src={this.props.currentCustomerUser.profile_img} />
+				 <h3>{this.props.currentUser.name}</h3>
+				 <h5>{this.props.currentUser.email}</h5>
+				 <h5>{this.props.currentUser.phone}</h5>
+				 <img src={this.props.currentUser.profile_img} />
 			</div>
 		);
 	}
@@ -18,7 +18,7 @@ class CustomerDashboard extends Component {
 
 function mapStateToProps(state){
 	return {
-		currentCustomerUser: state.auth.currentCustomerUser
+		currentUser: state.auth.currentUser
 	}
 }
 

@@ -2,6 +2,7 @@ const ChefRoutes = require('./routes/chef_routes');
 const MealRoutes = require('./routes/meal_routes');
 const UserRoutes = require('./routes/user_routes');
 const AuthRoutes = require('./routes/auth_routes');
+const SubscriptionRoutes = require('./routes/subscription_routes');
 
 module.exports = function(app){
 
@@ -17,8 +18,11 @@ module.exports = function(app){
 	app.post('/meal', MealRoutes.addMeal);
 	app.post('/del_meal', MealRoutes.delMeal);
 
-	app.get('/users', UserRoutes.getUsers);
-	app.post('/user', UserRoutes.addUser);
+	app.get('/diners', UserRoutes.getDiners);
+	app.post('/diner', UserRoutes.addDiner);
+
+	app.get('/subscriptions', SubscriptionRoutes.getSubs);
+	app.post('/subscription', SubscriptionRoutes.addSub);
 
 	app.post('/login', AuthRoutes.login);
 }

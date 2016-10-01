@@ -13,6 +13,7 @@ class NewMeal extends Component {
 			desc: this.refs.desc.value,
 			ingredients: this.refs.ingredients.value,
 			tags: this.refs.tags.value,
+			deliveryDate: this.refs.deliveryDate.value
 		};
 		this.props.submitNewMeal(newMeal);
 		this.clearForm();
@@ -48,6 +49,10 @@ class NewMeal extends Component {
 				  <div className="form-group">
 				    <label htmlFor="formGroupExampleInput2">Tags</label>
 				    <input ref='tags' type="text" className="form-control" placeholder="veggie, spicy" />
+				  </div>
+				  <div className='form-group'>
+				    <label htmlFor="formGroupExampleInput2">Cook Date</label>
+				  	<input ref='deliveryDate' type='date' className='form-control' />
 				  </div>
 				  <button className='btn btn-primary' onClick={this.submitMeal.bind(this)}>Announce Meal</button>
 			</div>

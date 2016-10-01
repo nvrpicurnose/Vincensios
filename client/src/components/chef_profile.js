@@ -7,6 +7,7 @@ class ChefProfile extends Component {
 		return (
 			<div key={meal._id}>
 				<h3>{meal.name}</h3>
+				{meal.deliveryDate}
 				<img src={meal.cover_img} />
 			</div>
 		);

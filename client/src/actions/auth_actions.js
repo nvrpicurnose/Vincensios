@@ -18,15 +18,18 @@ export function login(loginCreds){
 		// returned for handleSubmit() from reduxForm 
 		axios.post(API_URL+'/login', loginCreds)
 			.then(response => {
-				console.log(response.data.results);
 				// if request is good, update state to indicate user is authenticated
-				if(response.data.results[0] || response.data.results[1]){
+				if(response.data){
 					dispatch({
 						type: AUTH,
-						payload: response
+						payload: response.data
 					})
-					// redirect to route '/feature'
-					browserHistory.push('/');
+					// redirect to route
+					if(response.data.chef == true){
+						browserHistory.push('/chef_dashboard');
+					}else{
+						browserHistory.push('/diner_dashboard');
+					}
 				}else{
 					dispatch({
 						type: AUTH_ERROR,

@@ -11,7 +11,7 @@ class SignupChef extends Component {
 			phone: this.refs.chef_phone.value,
 			email: this.refs.chef_email.value,
 			profile_img: this.refs.chef_profile_img.value,
-			cover_img: this.refs.chef_cover_img.value,
+			cover_img: this.refs.chef_cover_img.value
 		};
 		this.props.signupChef(newChef);
 		browserHistory.push('/chef_dashboard');

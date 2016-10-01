@@ -1,8 +1,8 @@
-const Chef = require('../models/chef_model');
+const User = require('../models/user_model');
 
 // GET/chefs
 exports.getChefs = function(req, res, next){
-	Chef.find({}, function(err, chefs){
+	User.find({chef: true}, function(err, chefs){
 		if(err){return next(err)};
 		if(chefs){
 			res.send(chefs);
@@ -18,7 +18,7 @@ exports.addChef = function(req, res, next){
 	if(newChef.email && newChef.phone && newChef.name){
 
 		// See if a chef with a given email exists
-		Chef.findOne({email: newChef.email}, function(err, existingChef){
+		User.findOne({email: newChef.email}, function(err, existingChef){
 			if(err){return next(err);}
 			// if a chef with this email does exist, we will return an error on request
 			if(existingChef){
@@ -28,7 +28,7 @@ exports.addChef = function(req, res, next){
 			}
 			// If a chef does not exist, create and save new chef
 			// const chef is only a variable, it has not yet saved to the db
-			const chef = new Chef({
+			const chef = new User({
 				email: newChef.email,
 				phone: newChef.phone,
 				name: newChef.name,
@@ -37,7 +37,8 @@ exports.addChef = function(req, res, next){
 				bio: newChef.bio,
 				gps: newChef.gps,
 				tags: newChef.tags,
-				dualPlayer: false
+				chef: true,
+				diner: false
 			});
 			// save() actually saves the new chef to the db
 			// pass in a callback indicating the chef was created
@@ -56,7 +57,7 @@ exports.addChef = function(req, res, next){
 exports.delChef = function(req, res, next){
 	const chef = req.body;
 	if(chef){
-		Chef.findOne({_id: chef._id}, function(err, existingChef){
+		User.findOne({_id: chef._id}, function(err, existingChef){
 			if(err){return next(err);}
 			// if a chef with this email does exist, we will return an error on request
 			if(existingChef){

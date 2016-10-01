@@ -7,8 +7,8 @@ import { browserHistory } from 'react-router';
 class ChefDashboard extends Component {
 
 	deleteChef(){
-		console.log(this.props.currentChefUser);
-		this.props.delChef(this.props.currentChefUser);
+		console.log(this.props.currentUser);
+		this.props.delChef(this.props.currentUser);
 		browserHistory.push('/');
 	}
 	
@@ -17,27 +17,28 @@ class ChefDashboard extends Component {
 			<div key={meal._id}>
 				<h3>{meal.name}</h3>
 				<img src={meal.cover_img} />
+				{meal.deliveryDate}
 				<button onClick={()=>this.props.delMeal(meal)}>Delete Meal</button>
 			</div>
 		);
 	}
 
 	componentWillMount(){
-		this.props.myKitchenMeals(this.props.currentChefUser);
+		this.props.myKitchenMeals(this.props.currentUser);
 	}
 	
 	render(){
 		return (
 			<div className='card card-block'>
 				 CHEF DASHBOARD
-				 <h3>{this.props.currentChefUser.name}</h3>
-				 <h5>{this.props.currentChefUser.email}</h5>
-				 <h5>{this.props.currentChefUser.phone}</h5>
+				 <h3>{this.props.currentUser.name}</h3>
+				 <h5>{this.props.currentUser.email}</h5>
+				 <h5>{this.props.currentUser.phone}</h5>
 				 <button onClick={this.deleteChef.bind(this)} className='btn btn-danger'>Delete</button>
-				 <img src={this.props.currentChefUser.profile_img} />
-				<NewMeal chef={this.props.currentChefUser} />
+				 <img src={this.props.currentUser.profile_img} />
+				<NewMeal chef={this.props.currentUser} />
 				{
-					this.props.currentChefMeals.map(this.renderMeals.bind(this))
+					this.props.currentCookedMeals.map(this.renderMeals.bind(this))
 				}
 			</div>
 		);
@@ -46,8 +47,8 @@ class ChefDashboard extends Component {
 
 function mapStateToProps(state){
 	return {
-		currentChefUser: state.auth.currentChefUser,
-		currentChefMeals: state.auth.currentChefMeals
+		currentUser: state.auth.currentUser,
+		currentCookedMeals: state.auth.currentCookedMeals
 	}
 }
 

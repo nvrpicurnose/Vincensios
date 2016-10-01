@@ -10,7 +10,7 @@ class Header extends Component {
 	}
 
 	chefDashboardButton(){
-		if(this.props.authenticated && this.props.currentChefUser && this.props.currentChefUser.email){
+		if(this.props.authenticated && this.props.currentUser && this.props.currentUser.chef){
 			return (
 				<li className='nav-item'>
 					<Link to='/chef_dashboard'>My Kitchen</Link>
@@ -20,7 +20,7 @@ class Header extends Component {
 	}
 
 	userDashboardButton(){
-		if(this.props.authenticated && this.props.currentCustomerUser && this.props.currentCustomerUser.email){
+		if(this.props.authenticated && this.props.currentUser && this.props.currentUser.diner){
 			return (
 				<li className='nav-item'>
 					<Link to='/diner_dashboard'>Dining Table</Link>
@@ -40,10 +40,21 @@ class Header extends Component {
 		);
 	}
 
+	static contextTypes = {
+		router: React.PropTypes.object
+	}
+
+	backButton(){
+		this.context.router.goBack()
+	}
+
 	render(){
 		return (
 			<nav className='navbar navbar-light'>
 				<ul className='nav navbar-nav'>
+					<li className='nav-item' onClick={this.backButton.bind(this)}>
+						Back
+					</li>
 					<li className='nav-item'>
 						<Link to='/'>Browse</Link>
 					</li>
@@ -59,8 +70,8 @@ class Header extends Component {
 function mapStateToProps(state){
 	return {
 		authenticated: state.auth.authenticated,
-		currentChefUser: state.auth.currentChefUser,
-		currentCustomerUser: state.auth.currentCustomerUser
+		currentUser: state.auth.currentUser,
+		currentUser: state.auth.currentUser
 	}
 }
 
