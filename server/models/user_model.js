@@ -6,7 +6,8 @@ const userSchema = new Schema({
 	name: String,
 	profile_img: String,
 	email: String,
-	phone: String
+	phone: String,
+	dualPlayer: Boolean		// represents if a chef is also a user
 });
 
 

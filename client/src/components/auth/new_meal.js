@@ -15,6 +15,15 @@ class NewMeal extends Component {
 			tags: this.refs.tags.value,
 		};
 		this.props.submitNewMeal(newMeal);
+		this.clearForm();
+	}
+
+	clearForm(){
+		this.refs.name.value = "";
+		this.refs.cover_img.value = "";
+		this.refs.desc.value = "";
+		this.refs.ingredients.value = "";
+		this.refs.tags.value = "";
 	}
 
 	render(){

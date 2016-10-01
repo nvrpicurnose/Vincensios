@@ -31,7 +31,8 @@ exports.addUser = function(req, res, next){
 				email: newUser.email,
 				phone: newUser.phone,
 				name: newUser.name,
-				profile_img: newUser.profile_img
+				profile_img: newUser.profile_img,
+				dualPlayer: false
 			});
 			// save() actually saves the new user to the db
 			// pass in a callback indicating the user was created

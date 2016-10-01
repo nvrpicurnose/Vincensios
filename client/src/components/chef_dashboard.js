@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import NewMeal from './auth/new_meal';
-import {delChef, delMeal} from '../actions/auth_chef_actions';
+import {delChef, delMeal, myKitchenMeals} from '../actions/auth_chef_actions';
 import { browserHistory } from 'react-router';
 
 class ChefDashboard extends Component {
@@ -20,6 +20,10 @@ class ChefDashboard extends Component {
 				<button onClick={()=>this.props.delMeal(meal)}>Delete Meal</button>
 			</div>
 		);
+	}
+
+	componentWillMount(){
+		this.props.myKitchenMeals(this.props.currentChefUser);
 	}
 	
 	render(){
@@ -47,4 +51,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default connect(mapStateToProps, {delChef, delMeal})(ChefDashboard);
+export default connect(mapStateToProps, {delChef, delMeal, myKitchenMeals})(ChefDashboard);

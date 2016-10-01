@@ -13,4 +13,9 @@ export const DEL_CHEF = 'DEL_CHEF';
 export const DEL_MEAL = 'DEL_MEAL';
 
 // user auth related actions
-export const NEW_CUSTOMER = "NEW_CUSTOMER";
+export const NEW_DINER = "NEW_DINER";
+
+// general auth stuff
+export const AUTH = "AUTH";
+export const UNAUTH = "UNAUTH";
+export const AUTH_ERROR = "AUTH_ERROR";

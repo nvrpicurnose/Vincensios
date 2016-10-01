@@ -16,6 +16,7 @@ exports.getChefs = function(req, res, next){
 exports.addChef = function(req, res, next){
 	const newChef = req.body;
 	if(newChef.email && newChef.phone && newChef.name){
+
 		// See if a chef with a given email exists
 		Chef.findOne({email: newChef.email}, function(err, existingChef){
 			if(err){return next(err);}
@@ -35,7 +36,8 @@ exports.addChef = function(req, res, next){
 				cover_img: newChef.cover_img,
 				bio: newChef.bio,
 				gps: newChef.gps,
-				tags: newChef.tags
+				tags: newChef.tags,
+				dualPlayer: false
 			});
 			// save() actually saves the new chef to the db
 			// pass in a callback indicating the chef was created

@@ -1,32 +1,47 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
-import {signupUser} from '../../actions/auth_user_actions';
+import {login} from '../../actions/auth_actions';
 
 class Login extends Component {
 
-	login(){
-		const newUser = {
-			
+	submitLogin(){
+		const loginCreds= {
+			email: this.refs.email.value,
+			password: this.refs.password.value
 		}
+		this.props.login(loginCreds);
+	}
+
+	renderErrorMessage(){
+		return (
+			<h5>{this.props.authErrorMessage}</h5>
+		);
 	}
 
 	render(){
 		return (
 			<div className='card card-block'>
 				  <div className="form-group">
-				    <label htmlFor="formGroupExampleInput">Username</label>
-				    <input ref='name' type="text" className="form-control" />
+				    <label htmlFor="formGroupExampleInput">Email</label>
+				    <input ref='email' type="email" className="form-control" />
 				  </div>
 				  <div className="form-group">
 				    <label htmlFor="formGroupExampleInput2">Password</label>
-				    <input ref='cover_img' type="password" className="form-control" />
+				    <input ref='password' type="password" className="form-control" />
 				  </div>
-				  <button className='btn btn-primary' onClick={this.login.bind(this)}>Log In</button>
+				  <button className='btn btn-primary' onClick={this.submitLogin.bind(this)}>Log In</button>
+				  {this.renderErrorMessage()}
 			</div>
 		);
 	}
 }
 
+function mapStateToProps(state){
+	return {
+		authenticated: state.auth.authenticated,
+		authErrorMessage: state.auth.authErrorMessage
+	}
+}
 
-export default connect(null, {signupUser})(Login);
+export default connect(mapStateToProps, {login})(Login);

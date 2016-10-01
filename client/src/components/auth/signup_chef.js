@@ -16,6 +16,12 @@ class SignupChef extends Component {
 		this.props.signupChef(newChef);
 		browserHistory.push('/chef_dashboard');
 	}
+
+	componentWillUpdate(){
+		if(this.props.authenticated){
+			browserHistory.push('/');
+		}
+	}
 	
 	render(){
 		return (
@@ -49,7 +55,8 @@ class SignupChef extends Component {
 
 function mapStateToProps(state){
 	return {
-		new_chef: state.auth.new_chef
+		new_chef: state.auth.new_chef,
+		authenticated: state.auth.authenticated
 	}
 }
 

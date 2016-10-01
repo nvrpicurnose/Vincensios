@@ -1,4 +1,4 @@
-import { NEW_CUSTOMER } from './action_types';
+import { NEW_DINER } from './action_types';
 import axios from 'axios';
 
 const API_URL = "http://localhost:3090";
@@ -7,7 +7,7 @@ const API_URL = "http://localhost:3090";
 export function signupUser(newUser){
 	const newUserPromise = axios.post(API_URL+"/user", newUser);
 	return {
-		type: NEW_CUSTOMER,
+		type: NEW_DINER,
 		payload: newUserPromise
 	}
 }

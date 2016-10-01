@@ -36,3 +36,11 @@ export function delMeal(meal){
 		payload: delMealPromise
 	}
 }
+
+export function myKitchenMeals(chef){
+	const mealsPromise = axios.get(API_URL+"/meals?chef_id="+chef._id)
+	return {
+		type: COOKED_MEALS,
+		payload: mealsPromise
+	}
+}

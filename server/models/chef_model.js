@@ -10,7 +10,8 @@ const chefSchema = new Schema({
 	phone: String,
 	bio: String,
 	gps: [Number],
-	tags: [String]
+	tags: [String],
+	dualPlayer: Boolean		// represents if a chef is also a user
 });
 
 

@@ -13,13 +13,19 @@ class SignupUser extends Component {
 			profile_img: this.refs.user_profile_img.value
 		};
 		this.props.signupUser(newUser);
-		browserHistory.push('/customer_dashboard');
+		browserHistory.push('/diner_dashboard');
+	}
+
+	componentWillUpdate(){
+		if(this.props.authenticated){
+			browserHistory.push('/');
+		}
 	}
 	
 	render(){
 		return (
 			<div className='card card-block'>
-				  <h1>SIGN UP NEW USERS</h1>
+				  <h1>SIGN UP NEW DINER</h1>
 				  <div className="form-group">
 				    <label htmlFor="formGroupExampleInput">Name</label>
 				    <input ref='user_name' type="text" className="form-control" placeholder="Joey Lam" />
@@ -44,7 +50,8 @@ class SignupUser extends Component {
 
 function mapStateToProps(state){
 	return {
-		new_user: state.auth.new_user
+		new_user: state.auth.new_user,
+		authenticated: state.auth.authenticated
 	}
 }
 

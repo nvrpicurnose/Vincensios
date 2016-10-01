@@ -16,7 +16,7 @@ class ChefProfile extends Component {
 		return (
 			<div className='card card-block'>
 				<h4 className='card-title'>{this.props.chef.name}</h4>
-				<img className='chefCardImg' src={this.props.chef.cover_img} />
+				<img className='chefCardImg' src={this.props.chef.profile_img} />
 				<h5>{this.props.chef.phone}</h5>
 				<h6>{this.props.chef.email}</h6>
 				{this.props.meals.map(this.renderMeals)}
