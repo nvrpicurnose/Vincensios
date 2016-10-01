@@ -21,7 +21,8 @@ module.exports = function(app){
 	app.get('/diners', UserRoutes.getDiners);
 	app.post('/diner', UserRoutes.addDiner);
 
-	app.get('/subscriptions', SubscriptionRoutes.getSubs);
+	app.get('/future_subs', SubscriptionRoutes.getFutureSubs);
+	app.get('/past_subs', SubscriptionRoutes.getPastSubs);
 	app.post('/subscription', SubscriptionRoutes.addSub);
 
 	app.post('/login', AuthRoutes.login);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {subscribeChef} from '../actions/auth_user_actions';
 
 class ChefProfile extends Component {
 
@@ -12,7 +13,7 @@ class ChefProfile extends Component {
 			</div>
 		);
 	}
-
+	
 	render(){
 		return (
 			<div className='card card-block'>
@@ -20,17 +21,23 @@ class ChefProfile extends Component {
 				<img className='chefCardImg' src={this.props.chef.profile_img} />
 				<h5>{this.props.chef.phone}</h5>
 				<h6>{this.props.chef.email}</h6>
-				{this.props.meals.map(this.renderMeals)}
+				{
+					this.props.chef._id !== this.props.currentUser._id ?
+					<button onClick={()=>this.props.subscribeChef(this.props.chef, this.props.currentUser)}>Subscribe</button> :
+					null
+				}
+				{this.props.meals.map(this.renderMeals.bind(this))}
 			</div>
 		);
 	}
 }
-
+	
 function mapStateToProps(state){
 	return {
 		chef: state.content.current_chef,
-		meals: state.content.meals
+		meals: state.content.meals,
+		currentUser: state.auth.currentUser
 	}
 }
 
-export default connect(mapStateToProps)(ChefProfile);
+export default connect(mapStateToProps, {subscribeChef})(ChefProfile);

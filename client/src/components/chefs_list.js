@@ -9,7 +9,7 @@ class ChefsList extends Component {
 	componentWillMount(){
 		this.props.fetchUsers();		
 	}
-
+	
 	goToChef(chef){
 		this.props.goToChef(chef);
 		this.props.fetchMeals(chef);

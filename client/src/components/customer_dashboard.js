@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import DinerCalendar from './calendar/calendar';
 
 class CustomerDashboard extends Component {
 	
@@ -11,6 +12,7 @@ class CustomerDashboard extends Component {
 				 <h5>{this.props.currentUser.email}</h5>
 				 <h5>{this.props.currentUser.phone}</h5>
 				 <img src={this.props.currentUser.profile_img} />
+				 <DinerCalendar />
 			</div>
 		);
 	}

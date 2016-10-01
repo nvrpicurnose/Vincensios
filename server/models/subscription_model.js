@@ -3,11 +3,10 @@ const Schema = mongoose.Schema;
 
 // Define our model
 const subSchema = new Schema({
-	meal_id: String,
 	chef_id: String,
 	diner_id: String,
-	subscribeDate: Date,
-	deliveryDate: Date,
+	startDate: Date,
+	endDate: Date,
 	createdAt: Date
 });
 
