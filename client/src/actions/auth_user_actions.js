@@ -31,27 +31,29 @@ export function subscribeChef(chef, currentUser){
 	}
 }
 
-export function loadPastSubscriptions(currentUser, pastSince){
+// replace with Aysnc version
+/*export function loadPastSubscriptions(currentUser, pastSince){
 	const pastSinceUnix = Date.parse(pastSince);
 	const pastSubsPromise = axios.get(API_URL+"/past_subs?diner_id="+currentUser._id+"&pastSince="+pastSinceUnix);
 	return {
 		type: GET_PAST_SUBS,
 		payload: pastSubsPromise
 	}
-}
+}*/
 
-export function loadFutureSubscriptions(currentUser, futureSince){
+// replace with async version
+/*export function loadFutureSubscriptions(currentUser, futureSince){
 	const futureSinceUnix = Date.parse(futureSince);
 	const futureSubsPromise = axios.get(API_URL+"/future_subs?diner_id="+currentUser._id+"&futureSince="+futureSinceUnix);
 	return {
 		type: GET_FUTURE_SUBS,
 		payload: futureSubsPromise
 	}
-}
+}*/
 
-export function loadAsyncPastSubscriptions(currentUser, pastSince){
+export function loadAsyncPastSubscriptions(currentUser){
 	return function(dispatch){
-		const pastSinceUnix = Date.parse(pastSince);
+		const pastSinceUnix = Date.parse(new Date());
 		axios.get(API_URL+"/past_subs?diner_id="+currentUser._id+"&pastSince="+pastSinceUnix)
 			.then(response => {
 				// if request is good, update state to indicate user is authenticated
@@ -60,7 +62,6 @@ export function loadAsyncPastSubscriptions(currentUser, pastSince){
 						type: GET_PAST_SUBS,
 						payload: response.data
 					});
-					loadMealsFromSubs(response.data);
 				}
 			})
 			.catch((err)=>{
@@ -70,6 +71,29 @@ export function loadAsyncPastSubscriptions(currentUser, pastSince){
 	}
 }
 
+export function loadAsyncFutureSubscriptions(currentUser, futureSince){
+	return function(dispatch){
+		const futureSinceUnix = Date.parse(futureSince);
+		axios.get(API_URL+"/past_subs?diner_id="+currentUser._id+"&futureSince="+futureSinceUnix)
+			.then(response => {
+				// if request is good, update state to indicate user is authenticated
+				console.log(response);
+				if(response.data){
+					dispatch({
+						type: GET_FUTURE_SUBS,
+						payload: response.data
+					});
+				}
+			})
+			.catch((err)=>{
+				// if request is bad, show an error to user
+				console.log(err);
+			});
+	}
+}
+
+// for async chaining instead of single dispatch method
+/*
 function loadMealsFromSubs(subs){
 	console.log("===================");
 	console.log(subs);
@@ -95,4 +119,4 @@ function loadMealsFromSubs(subs){
 				});
 		})
 	}
-}
+}*/

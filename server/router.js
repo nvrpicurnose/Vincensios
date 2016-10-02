@@ -23,7 +23,6 @@ module.exports = function(app){
 
 	app.get('/future_subs', SubscriptionRoutes.getFutureSubs);
 	app.get('/past_subs', SubscriptionRoutes.getPastSubs);
-	app.get('/subscriptionMeals', SubscriptionRoutes.getMealsFromSub);
 	app.post('/subscription', SubscriptionRoutes.addSub);
 
 	app.post('/login', AuthRoutes.login);

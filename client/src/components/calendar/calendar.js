@@ -6,8 +6,9 @@ import { loadAsyncPastSubscriptions, loadFutureSubscriptions } from '../../actio
 class DinerCalendar extends Component {
 
 	componentWillMount(){
-		this.props.loadAsyncPastSubscriptions(this.props.currentUser, new Date());
+		this.props.loadAsyncPastSubscriptions(this.props.currentUser);
 	}
+
 	
 	render(){
 		return (
