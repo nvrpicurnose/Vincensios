@@ -3,6 +3,7 @@ const MealRoutes = require('./routes/meal_routes');
 const UserRoutes = require('./routes/user_routes');
 const AuthRoutes = require('./routes/auth_routes');
 const SubscriptionRoutes = require('./routes/subscription_routes');
+const PublicationRoutes = require('./routes/publication_routes');
 
 module.exports = function(app){
 
@@ -24,6 +25,9 @@ module.exports = function(app){
 	app.get('/future_subs', SubscriptionRoutes.getFutureSubs);
 	app.get('/past_subs', SubscriptionRoutes.getPastSubs);
 	app.post('/subscription', SubscriptionRoutes.addSub);
+
+	app.get('/future_pubs', PublicationRoutes.getFuturePubs);
+	app.get('/past_pubs', PublicationRoutes.getPastPubs);
 
 	app.post('/login', AuthRoutes.login);
 }

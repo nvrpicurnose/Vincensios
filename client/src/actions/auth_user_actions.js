@@ -18,7 +18,9 @@ export function subscribeChef(chef, currentUser, startDate, endDate){
 		if(currentUser && currentUser._id){
 			const newSub = {
 				chef_id: chef._id,
+				chef_name: chef.name,
 				diner_id: currentUser._id,
+				diner_name: currentUser.name,
 				startDate: startDate,
 				endDate: endDate
 			}
@@ -64,7 +66,6 @@ export function loadAsyncPastSubscriptions(currentUser){
 }
 
 export function loadAsyncFutureSubscriptions(currentUser){
-	console.log("loadAsyncFutureSubscriptions");
 	return function(dispatch){
 		const futureSinceUnix = Date.parse(new Date());
 		axios.get(API_URL+"/future_subs?diner_id="+currentUser._id+"&futureSince="+futureSinceUnix)

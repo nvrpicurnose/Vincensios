@@ -11,7 +11,8 @@ export const NEW_MEAL = "NEW_MEAL";
 export const COOKED_MEALS = "COOKED_MEALS";
 export const DEL_CHEF = 'DEL_CHEF';
 export const DEL_MEAL = 'DEL_MEAL';
-export const GET_PUBS = "GET_PUBS";
+export const GET_PAST_PUBS = "GET_PAST_PUBS";
+export const GET_FUTURE_PUBS = "GET_FUTURE_PUBS";
 
 // user auth related actions
 export const NEW_DINER = "NEW_DINER";

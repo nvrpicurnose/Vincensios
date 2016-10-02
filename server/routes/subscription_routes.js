@@ -20,7 +20,9 @@ exports.addSub = function(req, res, next){
 			}else{
 				const sub = new Subscription({
 					chef_id: newSub.chef_id,
+					chef_name: newSub.chef_name,
 					diner_id: newSub.diner_id,
+					diner_name: newSub.diner_name,
 					startDate: newSub.startDate,
 					endDate: newSub.endDate
 				});
@@ -45,60 +47,37 @@ exports.addSub = function(req, res, next){
 
 // GET/past_subs
 exports.getPastSubs = function(req, res, next){
-	if(req.query.chef_id || req.query.diner_id && req.query.pastSince){
+	if(req.query.diner_id && req.query.pastSince){
 		const pastSince = new Date(parseInt(req.query.pastSince));
-		// use chef_id if only that is available
-		if(req.query.chef_id && !req.query.diner_id){
-			extractSubsAndMeals("chef_id", "$lte", req.query.chef_id, pastSince)
-				.then(function(data){
-					console.log("Got some sweet sweet data:");
-					console.log(data);
-					res.json(data);
-				});
-		// else use diner_id
-		}else{
-			extractSubsAndMeals("diner_id", "$lte", req.query.diner_id, pastSince)
-				.then(function(data){
-					console.log("Got some sweet sweet data:");
-					console.log(data);
-					res.json(data);
-				});
-		}
+
+		extractSubsAndMeals("$lte", req.query.diner_id, pastSince)
+			.then(function(data){
+				res.json(data);
+			});
 	}
 }
 
 // GET/future_subs
 exports.getFutureSubs = function(req, res, next){
-	if(req.query.chef_id || req.query.diner_id && req.query.futureSince){
+	if(req.query.diner_id && req.query.futureSince){
 		const futureSince = new Date(parseInt(req.query.futureSince));
-		// use chef_id if only that is available
-		if(req.query.chef_id && !req.query.diner_id){
-			extractSubsAndMeals("chef_id", "$gte", req.query.chef_id, futureSince)
-				.then(function(data){
-					res.json(data);
-				});
-		// else use diner_id
-		}else{
-			extractSubsAndMeals("diner_id", "$gte", req.query.diner_id, futureSince)
-				.then(function(data){
-					res.json(data);
-				});
-		}
+		
+		extractSubsAndMeals("$gte", req.query.diner_id, futureSince)
+			.then(function(data){
+				res.json(data);
+			});
 	}
 }
 
 // Promise.all() an array of promises for each sub
 // return an object with subs and meals
-function extractSubsAndMeals(whosId, comparisonOperator, id, since){
-	const whosIdX = whosId;
+function extractSubsAndMeals(comparisonOperator, diner_id, since){
 	const comparisonOperatorX = comparisonOperator;
 	// since we are dynamically creating these variable names, we use ES6 ComputedPropertyName to extract the desired field names (eg. 'diner_id', "$lte") for our query
-	const query = {"$and":[{[whosIdX]: id}, {endDate: {[comparisonOperatorX]: since}}]};
+	const query = {"$and":[{diner_id: diner_id}, {endDate: {[comparisonOperatorX]: since}}]};
 	const p = new Promise(function(res, rej){
 		// find a subscription based on an id (whosId) and '$gte' or '$lte' (comparisonOperator) 
-		console.log("Inside the query");
 		Subscription.find(query, function(err, subs){
-			console.log("Inside the query results");
 			if(err){
 				console.log(err);
 				return err
@@ -134,7 +113,6 @@ function extractSubsAndMeals(whosId, comparisonOperator, id, since){
 						subs: subs,
 						sub_meals: flattenedMeals
 					}
-					console.log(subscriptionData);
 					res(subscriptionData);
 				});
 			}else{
@@ -152,10 +130,8 @@ function extractSubPromises(subs){
 	const array = subs.reduce((prev, curr, index) => {
 		const subMealPromise = getMealsForThisSub(curr);
 		if(subMealPromise && subMealPromise.length == 0){
-			console.log("Empty meals");
 			return prev;
 		}else{
-			console.log("Some meals found");
 	    	return [...prev, subMealPromise];
 		}
 	}, []);
@@ -164,11 +140,8 @@ function extractSubPromises(subs){
 
 // get meals related to this subscription
 function getMealsForThisSub (sub) {
-	console.log("Inside getMealsForThisSub");
-	const startDate = new Date(sub.startDate*1000);
-	const endDate = new Date(sub.endDate*1000);
 	const p = new Promise(function(res, rej){
-		Meal.find({"$and":[{chef_id: sub.chef_id}, {deliveryDate: {$gte:startDate}}, {deliveryDate: {$lte: endDate}}]}, function(err, meals){
+		Meal.find({"$and":[{chef_id: sub.chef_id}, {deliveryDate: {$gte:sub.startDate}}, {deliveryDate: {$lte: sub.endDate}}]}, function(err, meals){
 			if(err){return err};
 			if(meals.length > 0){
 				console.log("Found a meal");
@@ -181,3 +154,5 @@ function getMealsForThisSub (sub) {
 	});
 	return p;
 }
+
+// 

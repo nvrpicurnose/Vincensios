@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 // Define our model
 const subSchema = new Schema({
 	chef_id: String,
+	chef_name: String,
+	diner_name: String,
 	diner_id: String,
 	startDate: Date,
 	endDate: Date,

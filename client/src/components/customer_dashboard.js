@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import DinerCalendar from './calendar/calendar';
+import DinerCalendar from './calendar/dinerCalendar';
+import { loadAsyncPastSubscriptions, loadAsyncFutureSubscriptions } from '../actions/auth_user_actions';
 
 class CustomerDashboard extends Component {
 	
+	componentWillMount(){
+		this.props.loadAsyncFutureSubscriptions(this.props.currentUser);
+	}
+
 	render(){
 		return (
 			<div className='card card-block'>
@@ -12,7 +17,7 @@ class CustomerDashboard extends Component {
 				 <h5>{this.props.currentUser.email}</h5>
 				 <h5>{this.props.currentUser.phone}</h5>
 				 <img src={this.props.currentUser.profile_img} />
-				 <DinerCalendar />
+				 <DinerCalendar dinerSubs={this.props.dinerSubs} dinerSubMeals={this.props.dinerSubMeals} />
 			</div>
 		);
 	}
@@ -20,8 +25,10 @@ class CustomerDashboard extends Component {
 
 function mapStateToProps(state){
 	return {
-		currentUser: state.auth.currentUser
+		currentUser: state.auth.currentUser,
+		dinerSubs: state.calendar.dinerSubs,
+		dinerSubMeals: state.calendar.dinerSubMeals
 	}
 }
 
-export default connect(mapStateToProps)(CustomerDashboard);
+export default connect(mapStateToProps, {loadAsyncPastSubscriptions, loadAsyncFutureSubscriptions})(CustomerDashboard);

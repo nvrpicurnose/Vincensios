@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import NewMeal from './auth/new_meal';
-import {delChef, delMeal, myKitchenMeals} from '../actions/auth_chef_actions';
 import { browserHistory } from 'react-router';
+import NewMeal from './auth/new_meal';
+import {delChef, delMeal, myKitchenMeals, loadAsyncPastPublications, loadAsyncFuturePublications} from '../actions/auth_chef_actions';
+import ChefCalendar from './calendar/chefCalendar';
 
 class ChefDashboard extends Component {
 
@@ -25,6 +26,7 @@ class ChefDashboard extends Component {
 
 	componentWillMount(){
 		this.props.myKitchenMeals(this.props.currentUser);
+		this.props.loadAsyncFuturePublications(this.props.currentUser);
 	}
 	
 	render(){
@@ -37,6 +39,8 @@ class ChefDashboard extends Component {
 				 <button onClick={this.deleteChef.bind(this)} className='btn btn-danger'>Delete</button>
 				 <img src={this.props.currentUser.profile_img} />
 				<NewMeal chef={this.props.currentUser} />
+				<ChefCalendar chefPubs={this.props.chefPubs} chefPubMeals={this.props.chefPubMeals} />
+				ALL MEALS
 				{
 					this.props.currentCookedMeals.map(this.renderMeals.bind(this))
 				}
@@ -48,8 +52,10 @@ class ChefDashboard extends Component {
 function mapStateToProps(state){
 	return {
 		currentUser: state.auth.currentUser,
-		currentCookedMeals: state.auth.currentCookedMeals
+		currentCookedMeals: state.auth.currentCookedMeals,
+		chefPubs: state.calendar.chefPubs,
+		chefPubMeals: state.calendar.chefPubMeals
 	}
 }
 
-export default connect(mapStateToProps, {delChef, delMeal, myKitchenMeals})(ChefDashboard);
+export default connect(mapStateToProps, {delChef, delMeal, myKitchenMeals, loadAsyncPastPublications, loadAsyncFuturePublications})(ChefDashboard);
