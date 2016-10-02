@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
+import moment from 'moment';
 
 class DinerCalendar extends Component {
 
 	renderSubMeals(meal){
 		return (
-			<div key={meal._id}>
-				{meal.name}
-				{meal.deliveryDate}
-				<img src={meal.cover_img} />
+			<div className='card card-block' key={meal._id}>
+				<div className='mealTitle'>
+					<h5>{meal.name}</h5>
+					Cooked by {meal.chef_name} {moment(meal.deliveryDate).fromNow()}
+				</div>
+				<img className='mealImg' src={meal.cover_img} />
 			</div>
 		);
 	}
 
 	renderSubs(sub){
 		return (
-			<div key={sub._id}>
-				{sub.chef_name}
+			<div className='subbedChef' key={sub._id}>
+				<h5>{sub.chef_name}</h5>
 			</div>
 		);
 	}
@@ -25,10 +28,10 @@ class DinerCalendar extends Component {
 	render(){
 		return (
 			<div className='kzCalender'>
-				<h2>CALENDER - Upcoming Meals</h2>
+				{/*<div className='subscribedTo'><h4>Subscribed To</h4></div>
+				{this.props.dinerSubs.map(sub=>this.renderSubs(sub))}*/}
+				<div className='upcomingMeals'><h2>Upcoming Meals</h2></div>
 				{this.props.dinerSubMeals.map(meal=>this.renderSubMeals(meal))}
-				<h3>Subscribed To</h3>
-				{this.props.dinerSubs.map(sub=>this.renderSubs(sub))}
 			</div>
 		);
 	}

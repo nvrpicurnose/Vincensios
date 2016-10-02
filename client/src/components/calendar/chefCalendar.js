@@ -6,17 +6,21 @@ class ChefCalendar extends Component {
 
 	renderPubs(pub){
 		return (
-			<div key={pub._id}>
-				{pub.diner_name}
+			<div className='card card-block' key={pub._id}>
+				<div className='mealTitle'>
+					<h5>{pub.diner_name}</h5>
+				</div>
 			</div>
 		);
 	}
 
 	renderPubMeals(meal){
 		return (
-			<div key={meal._id}>
-				{meal.name}
-				<img src={meal.cover_img} />
+			<div className='card card-block' key={meal._id}>
+				<div className='mealTitle'>
+					<h5>{meal.name}</h5>
+				</div>
+				<img className='mealImg' src={meal.cover_img} />
 			</div>
 		);
 	}
@@ -24,8 +28,8 @@ class ChefCalendar extends Component {
 	render(){
 		return (
 			<div className='kzCalender'>
-				<h2>CHEF CALENDER - Upcoming Meals</h2>
-				{this.props.chefPubs.map((pub)=>this.renderPubs(pub))}
+				<div className='upcomingMeals'><h2>Planned Meals</h2></div>
+				{/*{this.props.chefPubs.map((pub)=>this.renderPubs(pub))}*/}
 				{this.props.chefPubMeals.map((meal)=>this.renderPubMeals(meal))}
 			</div>
 		);

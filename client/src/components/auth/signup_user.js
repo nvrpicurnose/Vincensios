@@ -25,7 +25,7 @@ class SignupUser extends Component {
 	render(){
 		return (
 			<div className='card card-block'>
-				  <h1>SIGN UP NEW DINER</h1>
+				  <div className='titleBar'><h2>SIGN UP NEW DINER</h2></div>
 				  <div className="form-group">
 				    <label htmlFor="formGroupExampleInput">Name</label>
 				    <input ref='user_name' type="text" className="form-control" placeholder="Joey Lam" />
@@ -42,7 +42,7 @@ class SignupUser extends Component {
 				    <label htmlFor="formGroupExampleInput2">Profile Image Link</label>
 				    <input ref='user_profile_img' type="text" className="form-control" placeholder="http://facebook.com/3453654/245635_345.jpg" />
 				  </div>
-				  <button className='btn btn-primary' onClick={this.submitUser.bind(this)}>Sign Up</button>
+				  <button className='btn btn-primary btn-block' onClick={this.submitUser.bind(this)}>Sign Up</button>
 			</div>
 		);
 	}

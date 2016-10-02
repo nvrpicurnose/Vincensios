@@ -2,15 +2,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {subscribeChef} from '../actions/auth_user_actions';
 import {getSubscriptionInterval} from '../apis/userDetailsAPI'
+import moment from 'moment';
 
 class ChefProfile extends Component {
 
 	renderMeals(meal){
 		return (
-			<div key={meal._id}>
-				<h3>{meal.name}</h3>
-				{meal.deliveryDate}
-				<img src={meal.cover_img} />
+			<div className='card card-block' key={meal._id}>
+				<div className='mealTitle'>
+					<h5>{meal.name}</h5>
+					{moment(meal.deliveryDate).fromNow()}
+				</div>
+				<img className='mealImg' src={meal.cover_img} />
 			</div>
 		);
 	}
@@ -29,17 +32,23 @@ class ChefProfile extends Component {
 	render(){
 		return (
 			<div className='card card-block'>
-				<h4 className='card-title'>{this.props.chef.name}</h4>
-				<img className='chefCardImg' src={this.props.chef.profile_img} />
-				<h5>{this.props.chef.phone}</h5>
-				<h6>{this.props.chef.email}</h6>
-				{
-					this.props.chef._id !== this.props.currentUser._id ?
-					<button onClick={this.subscribeToChef.bind(this)}>Subscribe For Next Week</button> :
-					null
-				}
-				{this.props.subscriptionMessage}
-				{this.props.meals.map(this.renderMeals.bind(this))}
+				<div className='chefProfileSummary'>
+					<img className='chefProfileImg' src={this.props.chef.profile_img} />
+					<div className='chefProfileInfo'>
+						<h4 className='card-title'>{this.props.chef.name}</h4>
+						<h5>{this.props.chef.phone}</h5>
+						<h6>{this.props.chef.email}</h6>
+					</div>
+				</div>
+					{
+						this.props.chef._id !== this.props.currentUser._id ?
+						<button className='btn btn-primary btn-block' onClick={this.subscribeToChef.bind(this)}>Subscribe For Next Week</button> :
+						null
+					}
+					{this.props.subscriptionMessage}
+				<div className='mealList'>
+					{this.props.meals.map(this.renderMeals.bind(this))}
+				</div>
 			</div>
 		);
 	}

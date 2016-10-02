@@ -17,7 +17,7 @@ class AuthScreen extends Component {
 			return (
 				<div>
 					<Login />
-					<p onClick={this.triggerSignForm.bind(this)}>Sign Up</p>
+					<button className='btn btn-block' onClick={this.triggerSignForm.bind(this)}>Sign Up</button>
 				</div>
 			);
 		}
@@ -27,10 +27,10 @@ class AuthScreen extends Component {
 		if(this.state.signUp){
 			return (
 				<div>
-					<h2>Sign Up As..</h2>
-					<button onClick={()=>this.redirectTo('chef')} className='btn btn-primary'>Chef</button>
-					<button onClick={()=>this.redirectTo('diner')} className='btn btn-primary'>Diner</button>
-					<p onClick={this.triggerSignForm.bind(this)}>Back To Login</p>
+					<div className='titleBar'><h2>Sign Up</h2></div>
+					<button onClick={()=>this.redirectTo('chef')} className='btn btn-primary btn-block signupType' >Chef</button>
+					<button onClick={()=>this.redirectTo('diner')} className='btn btn-primary btn-block signupType' >Diner</button>
+					<button className='btn btn-block' onClick={this.triggerSignForm.bind(this)}>Back To Login</button>
 				</div>
 			);
 		}
@@ -43,7 +43,6 @@ class AuthScreen extends Component {
 	render(){
 		return (
 			<div>
-				<h4>Authentication</h4>
 				{this.renderSignIn()}
 				{this.renderSignUp()}
 			</div>

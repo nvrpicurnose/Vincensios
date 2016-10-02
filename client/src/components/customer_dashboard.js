@@ -12,12 +12,15 @@ class CustomerDashboard extends Component {
 	render(){
 		return (
 			<div className='card card-block'>
-				 CUSTOMER DASHBOARD
-				 <h3>{this.props.currentUser.name}</h3>
-				 <h5>{this.props.currentUser.email}</h5>
-				 <h5>{this.props.currentUser.phone}</h5>
-				 <img src={this.props.currentUser.profile_img} />
-				 <DinerCalendar dinerSubs={this.props.dinerSubs} dinerSubMeals={this.props.dinerSubMeals} />
+				<div className='chefProfileSummary'>
+					 <img className='chefProfileImg' src={this.props.currentUser.profile_img} />
+					 <div className='chefProfileInfo'>
+						 <h3>{this.props.currentUser.name}</h3>
+						 <h5>{this.props.currentUser.email}</h5>
+						 <h5>{this.props.currentUser.phone}</h5>
+					 </div>
+				</div>
+				<DinerCalendar dinerSubs={this.props.dinerSubs} dinerSubMeals={this.props.dinerSubMeals} />
 			</div>
 		);
 	}

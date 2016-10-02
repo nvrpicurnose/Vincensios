@@ -8,6 +8,7 @@ class NewMeal extends Component {
 	submitMeal(){
 		const newMeal = {
 			chef_id: this.props.chef._id,
+			chef_name: this.props.chef.name,
 			name: this.refs.name.value,
 			cover_img: this.refs.cover_img.value,
 			desc: this.refs.desc.value,
@@ -17,6 +18,7 @@ class NewMeal extends Component {
 		};
 		this.props.submitNewMeal(newMeal);
 		this.clearForm();
+		this.props.triggerMealForm();
 	}
 
 	clearForm(){
@@ -54,7 +56,7 @@ class NewMeal extends Component {
 				    <label htmlFor="formGroupExampleInput2">Cook Date</label>
 				  	<input ref='deliveryDate' type='date' className='form-control' />
 				  </div>
-				  <button className='btn btn-primary' onClick={this.submitMeal.bind(this)}>Announce Meal</button>
+				  <button className='btn btn-primary btn-block' onClick={this.submitMeal.bind(this)}>Announce Meal</button>
 			</div>
 		);
 	}

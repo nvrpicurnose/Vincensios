@@ -51,17 +51,17 @@ class Header extends Component {
 	render(){
 		return (
 			<nav className='navbar navbar-light'>
-				<ul className='nav navbar-nav'>
-					<li className='nav-item' onClick={this.backButton.bind(this)}>
-						Back
-					</li>
-					<li className='nav-item'>
-						<Link to='/'>Browse</Link>
-					</li>
-					{this.chefDashboardButton()}
-					{this.userDashboardButton()}
-					{this.authButton()}
-				</ul>
+					<ul className='nav navbar-nav'>
+						<li className='nav-item' onClick={this.backButton.bind(this)} >
+							Back
+						</li>
+						<li className='nav-item'>
+							<Link to='/'>Browse</Link>
+						</li>
+						{this.chefDashboardButton()}
+						{this.userDashboardButton()}
+						{this.authButton()}
+					</ul>
 			</nav>
 		);
 	}

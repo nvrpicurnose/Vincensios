@@ -11,13 +11,85 @@
 }
 
 .chefCardImg {
-	max-width:100%;
-	max-height:100%;
+	width:600px;
 }
 
 #app{
-	max-height: 100vh;
-	max-width: 100vw;
-	overflow-y: scroll;
-	overflow-x: scroll;
+	background-color: rgba(0,0,0,0);
+}
+
+.titleBar {
+	margin: auto;
+	text-align: center;
+	padding: 30px 0px 30px 0px;
+}
+
+.loginForm {
+	padding: 0px 15px 0px 15px;
+}
+
+.signupType {
+	border-radius: 0px;
+}
+
+.chefProfileSummary {
+	padding: 20px;
+}
+
+.chefProfileImg {
+	width: 30%;
+	border-radius: 30px;
+	display: inline-block;
+}
+
+.chefProfileInfo {
+	width: 70%;
+	padding: 20px;
+	text-align: center;
+	display:inline-block;
+}
+
+.mealList {
+	padding: 10px;
+}
+
+.mealTitle {
+	text-align: center;
+}
+
+.mealImg {
+	width: 100%;
+	height: auto;
+	overflow:hidden;
+}
+
+.subscribedTo {
+	text-align: center;
+	background-color: #ffcccc;
+	padding: 5px 0px 5px 0px;
+}
+
+.subbedChef {
+	text-align: center;
+}
+
+.upcomingMeals {
+	margin-top: 10px;
+	text-align:center;
+	padding: 10px 0px 10px 0px;
+	background-color: #ffcccc;
+}
+
+.pubServing {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.menuButton {
+	color: white;
+	font-size: 1.5rem;
+}
+
+.menubar {
+	margin: 5px;
 }

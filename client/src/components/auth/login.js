@@ -21,17 +21,20 @@ class Login extends Component {
 
 	render(){
 		return (
-			<div className='card card-block'>
-				  <div className="form-group">
-				    <label htmlFor="formGroupExampleInput">Email</label>
-				    <input ref='email' type="email" className="form-control" />
+			<div>
+				  <h2 className='titleBar'>Login</h2>
+				  <div className='loginForm'>
+					  <div className="form-group">
+					    <label htmlFor="formGroupExampleInput">Email</label>
+					    <input ref='email' type="email" className="form-control" />
+					  </div>
+					  <div className="form-group">
+					    <label htmlFor="formGroupExampleInput2">Password</label>
+					    <input ref='password' type="password" className="form-control" />
+					  </div>
+				  	  <button className='btn btn-primary btn-block' onClick={this.submitLogin.bind(this)}>Log In</button>
+				  	  {this.renderErrorMessage()}
 				  </div>
-				  <div className="form-group">
-				    <label htmlFor="formGroupExampleInput2">Password</label>
-				    <input ref='password' type="password" className="form-control" />
-				  </div>
-				  <button className='btn btn-primary' onClick={this.submitLogin.bind(this)}>Log In</button>
-				  {this.renderErrorMessage()}
 			</div>
 		);
 	}

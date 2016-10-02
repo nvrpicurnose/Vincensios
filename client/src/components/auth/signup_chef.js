@@ -26,7 +26,7 @@ class SignupChef extends Component {
 	render(){
 		return (
 			<div className='card card-block'>
-				  <h1>SIGN UP NEW CHEF</h1>
+				  <div className='titleBar'><h2>SIGN UP NEW CHEF</h2></div>
 				  <div className="form-group">
 				    <label htmlFor="formGroupExampleInput">Name</label>
 				    <input ref='chef_name' type="text" className="form-control" placeholder="Joey Lam" />
@@ -47,7 +47,7 @@ class SignupChef extends Component {
 				    <label htmlFor="formGroupExampleInput2">Cover Image Link</label>
 				    <input ref='chef_cover_img' type="text" className="form-control" placeholder="http://google.com/images/gds32d4asdf5.jpg" />
 				  </div>
-				  <button className='btn btn-primary' onClick={this.submitChef.bind(this)}>Submit Application</button>
+				  <button className='btn btn-primary btn-block' onClick={this.submitChef.bind(this)}>Submit Application</button>
 			</div>
 		);
 	}

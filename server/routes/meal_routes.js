@@ -28,6 +28,7 @@ exports.addMeal = function(req, res, next){
 			const meal = new Meal({
 				name: newMeal.name,
 				chef_id: newMeal.chef_id,
+				chef_name: newMeal.chef_name,
 				cover_img: newMeal.cover_img,
 				desc: newMeal.desc,
 				ingredients: newMeal.ingredients,
