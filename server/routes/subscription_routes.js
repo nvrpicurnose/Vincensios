@@ -168,7 +168,7 @@ function getMealsForThisSub (sub) {
 	const startDate = new Date(sub.startDate*1000);
 	const endDate = new Date(sub.endDate*1000);
 	const p = new Promise(function(res, rej){
-		Meal.find({"$and":[{chef_id: sub.chef_id}]}, function(err, meals){
+		Meal.find({"$and":[{chef_id: sub.chef_id}, {deliveryDate: {$gte:startDate}}, {deliveryDate: {$lte: endDate}}]}, function(err, meals){
 			if(err){return err};
 			if(meals.length > 0){
 				console.log("Found a meal");
@@ -181,5 +181,3 @@ function getMealsForThisSub (sub) {
 	});
 	return p;
 }
-
-// , {deliveryDate: {$gte:startDate}}, {deliveryDate: {$lte: endDate}}
