@@ -1,4 +1,4 @@
-import { NEW_DINER, SUBSCRIBE, GET_PAST_SUBS, GET_FUTURE_SUBS, LOAD_SUB_MEALS } from './action_types';
+import { NEW_DINER, SUBSCRIBE, FAILED_TO_SUBSCRIBE, GET_PAST_SUBS, GET_FUTURE_SUBS, LOAD_SUB_MEALS } from './action_types';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
 
@@ -14,20 +14,32 @@ export function signupUser(newUser){
 }
 
 export function subscribeChef(chef, currentUser, startDate, endDate){
-	if(currentUser && currentUser._id){
-		const newSub = {
-			chef_id: chef._id,
-			diner_id: currentUser._id,
-			startDate: startDate,
-			endDate: endDate
+	return function(dispatch){
+		if(currentUser && currentUser._id){
+			const newSub = {
+				chef_id: chef._id,
+				diner_id: currentUser._id,
+				startDate: startDate,
+				endDate: endDate
+			}
+			axios.post(API_URL+"/subscription", newSub)
+				.then(response => {
+					if(response.data.success){
+						dispatch({
+							type: SUBSCRIBE,
+							payload: response.data.message
+						});
+					}else{
+						console.log(response);
+						dispatch({
+							type: FAILED_TO_SUBSCRIBE,
+							payload: response.data.message
+						})
+					}
+				});
+		}else{
+			browserHistory.push('/auth');
 		}
-		const newSubPromise = axios.post(API_URL+"/subscription", newSub);
-		return {
-			type: SUBSCRIBE,
-			payload: newSubPromise
-		}
-	}else{
-		browserHistory.push('/auth');
 	}
 }
 
@@ -52,10 +64,12 @@ export function loadAsyncPastSubscriptions(currentUser){
 }
 
 export function loadAsyncFutureSubscriptions(currentUser){
+	console.log("loadAsyncFutureSubscriptions");
 	return function(dispatch){
 		const futureSinceUnix = Date.parse(new Date());
 		axios.get(API_URL+"/future_subs?diner_id="+currentUser._id+"&futureSince="+futureSinceUnix)
 			.then(response => {
+				console.log(response);
 				// if request is good, update state to indicate user is authenticated
 				if(response.data){
 					dispatch({

@@ -16,6 +16,8 @@ export const GET_PUBS = "GET_PUBS";
 // user auth related actions
 export const NEW_DINER = "NEW_DINER";
 export const SUBSCRIBE = "SUBSCRIBE";
+export const UNSUBSCRIBE = "UNSUBSCRIBE";
+export const FAILED_TO_SUBSCRIBE = "FAILED_TO_SUBSCRIBE";
 export const GET_PAST_SUBS = "GET_PAST_SUBS";
 export const GET_FUTURE_SUBS = "GET_FUTURE_SUBS";
 

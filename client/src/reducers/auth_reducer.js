@@ -1,4 +1,4 @@
-import { NEW_CHEF, NEW_DINER, COOKED_MEALS, NEW_MEAL, DEL_CHEF, DEL_MEAL, AUTH, UNAUTH, AUTH_ERROR } from '../actions/action_types';
+import { NEW_CHEF, NEW_DINER, COOKED_MEALS, NEW_MEAL, DEL_CHEF, DEL_MEAL, AUTH, UNAUTH, AUTH_ERROR, SUBSCRIBE } from '../actions/action_types';
 import axios from 'axios';
 import store from '../store';
 

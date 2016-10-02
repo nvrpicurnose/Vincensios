@@ -35,9 +35,10 @@ class ChefProfile extends Component {
 				<h6>{this.props.chef.email}</h6>
 				{
 					this.props.chef._id !== this.props.currentUser._id ?
-					<button onClick={this.subscribeToChef.bind(this)}>Subscribe</button> :
+					<button onClick={this.subscribeToChef.bind(this)}>Subscribe For Next Week</button> :
 					null
 				}
+				{this.props.subscriptionMessage}
 				{this.props.meals.map(this.renderMeals.bind(this))}
 			</div>
 		);
@@ -49,6 +50,7 @@ function mapStateToProps(state){
 		chef: state.content.current_chef,
 		meals: state.content.meals,
 		currentUser: state.auth.currentUser,
+		subscriptionMessage: state.calendar.subscriptionMessage,
 		getSubscriptionInterval: getSubscriptionInterval
 	}
 }
