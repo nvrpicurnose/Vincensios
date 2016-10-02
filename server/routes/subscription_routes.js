@@ -1,127 +1,6 @@
 const Subscription = require('../models/subscription_model');
 const Meal = require('../models/meal_model');
 
-
-// GET/past_subs
-exports.getPastSubs = function(req, res, next){
-	if(req.query.chef_id || req.query.diner_id && req.query.pastSince){
-		console.log("Getting past subs...");
-		const pastSince = new Date(parseInt(req.query.pastSince));
-		console.log(" ================== pastSince ========================");
-		console.log(req.query.pastSince);
-		console.log(pastSince);
-		const newPastSince = pastSince.toISOString();
-		console.log(" ================== newPastSince ========================");
-		console.log(newPastSince);
-		// use chef_id if only that is available
-		if(req.query.chef_id && !req.query.diner_id){
-			console.log("Finding subs for chef");
-			Subscription.find({"$and":[{chef_id: req.query.chef_id}, {endDate: {$lte:pastSince}}]}, function(err, subs){
-				if(err){return next(err)};
-				if(subs){
-					console.log("Found subscriptions for this chef");
-					const promiseArray = extractSubPromises(subs);
-					Promise.all(promiseArray).then((allMeals)=>{
-						const subscriptionData = {
-							subs: subs,
-							sub_meals: allMeals
-						}
-						console.log(allMeals);
-						res.json(subscriptionData);
-					});
-				}else{
-					res.send("No subs found");
-				}
-			});
-		// else use diner_id
-		}else{
-			console.log("Finding subs for diners");
-			Subscription.find({"$and":[{diner_id: req.query.diner_id}, {endDate: {$lte:pastSince}}]}, function(err, subs){
-				if(err){return next(err)};
-				if(subs){
-					console.log("Found subscriptions for this diner");
-					//console.log(subs);
-					const promiseArray = extractSubPromises(subs);
-					Promise.all(promiseArray).then((allMeals)=>{
-						// Promise.all() returns an array of the results
-						// each result is an array, so allMeals is an array of arrays
-						// thus we must flatMap this array of arrays
-						const flattenedMeals = [];
-						allMeals.forEach((meal)=>{
-							// filter allMeals for undefined
-							let filtered = meal.filter((data)=>{
-								if(data !== null){
-									return data;
-								}
-							})
-							filtered.forEach((meal)=>{
-								flattenedMeals.push(meal);
-							})
-						})
-						
-						console.log("flattenedMeals =============");
-						console.log(flattenedMeals);
-						const subscriptionData = {
-							subs: subs,
-							sub_meals: flattenedMeals
-						}
-						res.json(subscriptionData);
-					});
-				}else{
-					res.send("No subs found");
-				}
-			});
-		}
-	}
-}
-
-// GET/future_subs
-exports.getFutureSubs = function(req, res, next){
-	if(req.query.chef_id || req.query.diner_id && req.query.futureSince){
-		const futureSince = new Date(req.query.futureSince*1000);
-		// use chef_id if only that is available
-		if(req.query.chef_id && !req.query.diner_id){
-			Subscription.find({"$and":[{chef_id: req.query.chef_id}, {endDate: {$gte:futureSince}}]}, function(err, subs){
-				if(err){return next(err)};
-				if(subs){
-					const promiseArray = extractSubPromises(subs);
-					Promise.all(promiseArray).then((allMeals)=>{
-						const subscriptionData = {
-							subs: subs,
-							sub_meals: allMeals
-						}
-						console.log(allMeals);
-						res.json(subscriptionData);
-					});
-				}else{
-					res.send("No subs found");
-				}
-			});
-		// else use diner_id
-		}else{
-			Subscription.find({"$and":[{diner_id: req.query.chef_id}, {endDate: {$gte:futureSince}}]}, function(err, subs){
-				if(err){return next(err)};
-				if(subs){
-					const promiseArray = extractSubPromises(subs);
-					console.log("============= GOT UP TO HERE ==========");
-					Promise.all(promiseArray).then((allMeals)=>{
-						const subscriptionData = {
-							subs: subs,
-							sub_meals: allMeals
-						}
-						console.log('========================');
-						console.log(allMeals);
-						res.json(subscriptionData);
-					});
-				}else{
-					res.send("No subs found");
-				}
-			});
-		}
-	}
-}
-
-
 // POST/subscription
 exports.addSub = function(req, res, next){
 	const newSub = req.body;
@@ -145,7 +24,98 @@ exports.addSub = function(req, res, next){
 }
 
 
-// extract the array of promises
+// GET/past_subs
+exports.getPastSubs = function(req, res, next){
+	if(req.query.chef_id || req.query.diner_id && req.query.pastSince){
+		const pastSince = new Date(parseInt(req.query.pastSince));
+		// use chef_id if only that is available
+		if(req.query.chef_id && !req.query.diner_id){
+			extractSubsAndMeals("chef_id", "$lte", req.query.chef_id, pastSince)
+				.then(function(data){
+					console.log("Got some sweet sweet data:");
+					console.log(data);
+					res.json(data);
+				});
+		// else use diner_id
+		}else{
+			extractSubsAndMeals("diner_id", "$lte", req.query.diner_id, pastSince)
+				.then(function(data){
+					console.log("Got some sweet sweet data:");
+					console.log(data);
+					res.json(data);
+				});
+		}
+	}
+}
+
+// GET/future_subs
+exports.getFutureSubs = function(req, res, next){
+	if(req.query.chef_id || req.query.diner_id && req.query.futureSince){
+		const futureSince = new Date(parseInt(req.query.futureSince));
+		// use chef_id if only that is available
+		if(req.query.chef_id && !req.query.diner_id){
+			extractSubsAndMeals("chef_id", "$gte", req.query.chef_id, futureSince)
+				.then(function(data){
+					res.json(data);
+				});
+		// else use diner_id
+		}else{
+			extractSubsAndMeals("diner_id", "$gte", req.query.diner_id, futureSince)
+				.then(function(data){
+					res.json(data);
+				});
+		}
+	}
+}
+
+// Promise.all() an array of promises for each sub
+// return an object with subs and meals
+function extractSubsAndMeals(whosId, comparisonOperator, id, since){
+	const whosIdX = whosId;
+	const comparisonOperatorX = comparisonOperator;
+	// since we are dynamically creating these variable names, we use ES6 ComputedPropertyName to extract the desired field names (eg. 'diner_id', "$lte") for our query
+	const query = {"$and":[{[whosIdX]: id}, {endDate: {[comparisonOperatorX]: since}}]};
+	const p = new Promise(function(res, rej){
+		// find a subscription based on an id (whosId) and '$gte' or '$lte' (comparisonOperator) 
+		Subscription.find(query, function(err, subs){
+			if(err){
+				console.log(err);
+				return err
+			};
+			if(subs){
+				const promiseArray = extractSubPromises(subs);
+				Promise.all(promiseArray).then((allMeals)=>{
+					// Promise.all() returns an array of the results
+					// each result is an array, so allMeals is an array of arrays
+					// thus we must flatMap this array of arrays
+					const flattenedMeals = [];
+					allMeals.forEach((meal)=>{
+						// filter allMeals for undefined
+						let filtered = meal.filter((data)=>{
+							if(data !== null){
+								return data;
+							}
+						})
+						filtered.forEach((meal)=>{
+							flattenedMeals.push(meal);
+						})
+					})
+					const subscriptionData = {
+						subs: subs,
+						sub_meals: flattenedMeals
+					}
+					res(subscriptionData);
+				});
+			}else{
+				res([]);
+			}
+		});
+	});
+	return p;
+}
+
+// return an array of meal promises for each subscription
+// output is used for Promise.all() in extractSubsAndMeals()
 function extractSubPromises(subs){
 	const array = subs.reduce((prev, curr, index) => {
 		const subMealPromise = getMealsForThisSub(curr);
@@ -158,7 +128,7 @@ function extractSubPromises(subs){
 	return array;
 }
 
-// Why do i return 1??
+// get meals related to this subscription
 function getMealsForThisSub (sub) {
 	const startDate = new Date(sub.startDate*1000);
 	const endDate = new Date(sub.endDate*1000);
@@ -166,11 +136,8 @@ function getMealsForThisSub (sub) {
 		Meal.find({"$and":[{chef_id: sub.chef_id}]}, function(err, meals){
 			if(err){return err};
 			if(meals.length > 0){
-				console.log("We got some meals!");
-				console.log(meals);
 				res(meals);
 			}else{
-				console.log("We got no meals!");
 				res();
 			}
 		});

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
-import { loadAsyncPastSubscriptions, loadFutureSubscriptions } from '../../actions/auth_user_actions';
+import { loadAsyncPastSubscriptions, loadAsyncFutureSubscriptions } from '../../actions/auth_user_actions';
 
 class DinerCalendar extends Component {
 
@@ -26,4 +26,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default connect(mapStateToProps, {loadAsyncPastSubscriptions, loadFutureSubscriptions })(DinerCalendar);
+export default connect(mapStateToProps, {loadAsyncPastSubscriptions, loadAsyncFutureSubscriptions })(DinerCalendar);

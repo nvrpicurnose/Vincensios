@@ -9,7 +9,6 @@ const initial_state = {
 export default function(state=initial_state, action){
 	switch(action.type){
 		case GET_PAST_SUBS:
-			console.log(action.payload);
 			return {
 				...state, 
 				dinerSubs: action.payload.subs,
@@ -18,8 +17,8 @@ export default function(state=initial_state, action){
 		case GET_FUTURE_SUBS:
 			return {
 				...state, 
-				dinerSubs: action.payload.data.subs,
-				dinerSubMeals: action.payload.data.sub_meals
+				dinerSubs: action.payload.subs,
+				dinerSubMeals: action.payload.sub_meals
 			}
 	} 
 	return state;

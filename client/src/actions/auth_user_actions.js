@@ -31,26 +31,6 @@ export function subscribeChef(chef, currentUser){
 	}
 }
 
-// replace with Aysnc version
-/*export function loadPastSubscriptions(currentUser, pastSince){
-	const pastSinceUnix = Date.parse(pastSince);
-	const pastSubsPromise = axios.get(API_URL+"/past_subs?diner_id="+currentUser._id+"&pastSince="+pastSinceUnix);
-	return {
-		type: GET_PAST_SUBS,
-		payload: pastSubsPromise
-	}
-}*/
-
-// replace with async version
-/*export function loadFutureSubscriptions(currentUser, futureSince){
-	const futureSinceUnix = Date.parse(futureSince);
-	const futureSubsPromise = axios.get(API_URL+"/future_subs?diner_id="+currentUser._id+"&futureSince="+futureSinceUnix);
-	return {
-		type: GET_FUTURE_SUBS,
-		payload: futureSubsPromise
-	}
-}*/
-
 export function loadAsyncPastSubscriptions(currentUser){
 	return function(dispatch){
 		const pastSinceUnix = Date.parse(new Date());
@@ -71,13 +51,12 @@ export function loadAsyncPastSubscriptions(currentUser){
 	}
 }
 
-export function loadAsyncFutureSubscriptions(currentUser, futureSince){
+export function loadAsyncFutureSubscriptions(currentUser){
 	return function(dispatch){
-		const futureSinceUnix = Date.parse(futureSince);
-		axios.get(API_URL+"/past_subs?diner_id="+currentUser._id+"&futureSince="+futureSinceUnix)
+		const futureSinceUnix = Date.parse(new Date());
+		axios.get(API_URL+"/future_subs?diner_id="+currentUser._id+"&futureSince="+futureSinceUnix)
 			.then(response => {
 				// if request is good, update state to indicate user is authenticated
-				console.log(response);
 				if(response.data){
 					dispatch({
 						type: GET_FUTURE_SUBS,
@@ -91,32 +70,3 @@ export function loadAsyncFutureSubscriptions(currentUser, futureSince){
 			});
 	}
 }
-
-// for async chaining instead of single dispatch method
-/*
-function loadMealsFromSubs(subs){
-	console.log("===================");
-	console.log(subs);
-	// how to async chain
-	return function(dispatch){
-		subs.forEach((sub)=>{
-			console.log(sub);
-			const startDate = Date.parse(sub.startDate);
-			const endDate = Date.parse(sub.endDate);
-			axios.get(API_URL+"/subscriptionMeals?chef_id="+sub.chef_id+"&startDate="+startDate+"&endDate="+endDate)
-				.then(response => {
-					// if request is good, update state to indicate user is authenticated
-					if(response.data){
-						dispatch({
-							type: LOAD_SUB_MEALS,
-							payload: response.data
-						});
-					}
-				})
-				.catch((err)=>{
-					// if request is bad, show an error to user
-					console.log(err);
-				});
-		})
-	}
-}*/
