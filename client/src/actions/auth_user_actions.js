@@ -13,13 +13,13 @@ export function signupUser(newUser){
 	}
 }
 
-export function subscribeChef(chef, currentUser){
+export function subscribeChef(chef, currentUser, startDate, endDate){
 	if(currentUser && currentUser._id){
 		const newSub = {
 			chef_id: chef._id,
 			diner_id: currentUser._id,
-			startDate: new Date,
-			endDate: new Date
+			startDate: startDate,
+			endDate: endDate
 		}
 		const newSubPromise = axios.post(API_URL+"/subscription", newSub);
 		return {

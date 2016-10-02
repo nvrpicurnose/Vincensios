@@ -6,7 +6,7 @@ import { loadAsyncPastSubscriptions, loadAsyncFutureSubscriptions } from '../../
 class DinerCalendar extends Component {
 
 	componentWillMount(){
-		this.props.loadAsyncPastSubscriptions(this.props.currentUser);
+		this.props.loadAsyncFutureSubscriptions(this.props.currentUser);
 	}
 
 	

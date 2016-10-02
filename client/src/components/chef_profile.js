@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {subscribeChef} from '../actions/auth_user_actions';
+import {getSubscriptionInterval} from '../apis/userDetailsAPI'
 
 class ChefProfile extends Component {
 
@@ -14,6 +15,17 @@ class ChefProfile extends Component {
 		);
 	}
 	
+	subscribeToChef(){
+		// get the subscription interval for this chef
+		const subInterval = this.props.getSubscriptionInterval(this.props.currentUser);
+		this.props.subscribeChef(
+			this.props.chef, 
+			this.props.currentUser,
+			subInterval.startDate,
+			subInterval.endDate
+		)
+	}
+
 	render(){
 		return (
 			<div className='card card-block'>
@@ -23,7 +35,7 @@ class ChefProfile extends Component {
 				<h6>{this.props.chef.email}</h6>
 				{
 					this.props.chef._id !== this.props.currentUser._id ?
-					<button onClick={()=>this.props.subscribeChef(this.props.chef, this.props.currentUser)}>Subscribe</button> :
+					<button onClick={this.subscribeToChef.bind(this)}>Subscribe</button> :
 					null
 				}
 				{this.props.meals.map(this.renderMeals.bind(this))}
@@ -36,7 +48,8 @@ function mapStateToProps(state){
 	return {
 		chef: state.content.current_chef,
 		meals: state.content.meals,
-		currentUser: state.auth.currentUser
+		currentUser: state.auth.currentUser,
+		getSubscriptionInterval: getSubscriptionInterval
 	}
 }
 
