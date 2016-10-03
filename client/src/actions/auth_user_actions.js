@@ -70,7 +70,6 @@ export function loadAsyncFutureSubscriptions(currentUser){
 		const futureSinceUnix = Date.parse(new Date());
 		axios.get(API_URL+"/future_subs?diner_id="+currentUser._id+"&futureSince="+futureSinceUnix)
 			.then(response => {
-				console.log(response);
 				// if request is good, update state to indicate user is authenticated
 				if(response.data){
 					dispatch({

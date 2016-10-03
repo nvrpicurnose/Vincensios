@@ -43,7 +43,7 @@ class ChefDashboard extends Component {
 			);
 		}else{
 			return (
-				<button onClick={this.triggerMealForm.bind(this)} className='btn btn-primary btn-block'>New Meal</button>
+				<button onClick={this.triggerMealForm.bind(this)} className='btn btn-success btn-block'>New Meal</button>
 			);
 		}
 	}

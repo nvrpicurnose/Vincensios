@@ -38,7 +38,7 @@ exports.addChef = function(req, res, next){
 				gps: newChef.gps,
 				tags: newChef.tags,
 				chef: true,
-				diner: false
+				diner: true
 			});
 			// save() actually saves the new chef to the db
 			// pass in a callback indicating the chef was created

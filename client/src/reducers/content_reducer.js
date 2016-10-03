@@ -3,9 +3,9 @@ import axios from 'axios';
 
 const initial_state = {
 	chefs: [],
-	current_chef: null,
+	current_chef: {},
 	meals: [],
-	current_meal: null
+	current_meal: {}
 }
 
 export default function(state=initial_state, action){

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {subscribeChef} from '../actions/auth_user_actions';
 import {getSubscriptionInterval} from '../apis/userDetailsAPI'
 import moment from 'moment';
+import lodash from 'lodash';
 
 class ChefProfile extends Component {
 
@@ -29,6 +30,14 @@ class ChefProfile extends Component {
 		)
 	}
 
+	renderSubscriptionButton(){
+		if(this.props.currentUser && this.props.chef._id !== this.props.currentUser._id){
+			return (
+				<button className='btn btn-success btn-block' onClick={this.subscribeToChef.bind(this)}>Subscribe For Next Week</button>
+			);
+		}
+	}
+
 	render(){
 		return (
 			<div className='card card-block'>
@@ -40,14 +49,13 @@ class ChefProfile extends Component {
 						<h6>{this.props.chef.email}</h6>
 					</div>
 				</div>
-					{
-						this.props.chef._id !== this.props.currentUser._id ?
-						<button className='btn btn-primary btn-block' onClick={this.subscribeToChef.bind(this)}>Subscribe For Next Week</button> :
-						null
-					}
-					{this.props.subscriptionMessage}
+				{this.renderSubscriptionButton()}
+				{this.props.subscriptionMessage}
 				<div className='mealList'>
-					{this.props.meals.map(this.renderMeals.bind(this))}
+					{this.props.meals.sort(function(a, b){
+						console.log(typeof a.deliveryDate);
+						return new Date(a.deliveryDate) - new Date(b.deliveryDate)
+					}).map(this.renderMeals.bind(this))}
 				</div>
 			</div>
 		);

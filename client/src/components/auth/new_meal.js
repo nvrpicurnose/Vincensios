@@ -56,7 +56,7 @@ class NewMeal extends Component {
 				    <label htmlFor="formGroupExampleInput2">Cook Date</label>
 				  	<input ref='deliveryDate' type='date' className='form-control' />
 				  </div>
-				  <button className='btn btn-primary btn-block' onClick={this.submitMeal.bind(this)}>Announce Meal</button>
+				  <button className='btn btn-success btn-block' onClick={this.submitMeal.bind(this)}>Announce Meal</button>
 			</div>
 		);
 	}

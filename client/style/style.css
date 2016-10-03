@@ -65,7 +65,8 @@
 
 .subscribedTo {
 	text-align: center;
-	background-color: #ffcccc;
+	background-color: #3399ff;
+	color: white;
 	padding: 5px 0px 5px 0px;
 }
 
@@ -77,7 +78,8 @@
 	margin-top: 10px;
 	text-align:center;
 	padding: 10px 0px 10px 0px;
-	background-color: #ffcccc;
+	background-color: #3399ff;
+	color: white;
 }
 
 .pubServing {

@@ -31,7 +31,9 @@ class DinerCalendar extends Component {
 				{/*<div className='subscribedTo'><h4>Subscribed To</h4></div>
 				{this.props.dinerSubs.map(sub=>this.renderSubs(sub))}*/}
 				<div className='upcomingMeals'><h2>Upcoming Meals</h2></div>
-				{this.props.dinerSubMeals.map(meal=>this.renderSubMeals(meal))}
+				{this.props.dinerSubMeals.sort(function(a, b){
+						return new Date(a.deliveryDate) - new Date(b.deliveryDate)
+					}).map(meal=>this.renderSubMeals(meal))}
 			</div>
 		);
 	}
